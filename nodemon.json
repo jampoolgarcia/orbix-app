@@ -1,0 +1,16 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "wacth": [
+    "src/"
+  ],
+  "execMap": {
+    "ts": "node -r ts-node/register"
+  },
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js,json,ts" 
+}
