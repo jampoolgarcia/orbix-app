@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import authController from '../controllers/auth.controller';
 
 class AuthRouter {
 
@@ -10,10 +11,10 @@ class AuthRouter {
   }
 
   public buildRoutes(): void {
-    this.router.post('login', );
-    this.router.post('logout', );
-    this.router.post('forgot', );
-    this.router.post('register', );
+    this.router.post('login', authController.login);
+    this.router.post('logout', authController.logout);
+    this.router.put('forgot', authController.forgot);
+    this.router.post('register', authController.register);
   }
   
 }
