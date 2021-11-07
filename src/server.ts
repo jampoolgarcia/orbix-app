@@ -1,8 +1,13 @@
+// core
 import express from 'express';
+import path from 'path';
+
+// externals 
 import morgan from 'morgan';
 import cors from 'cors'
 import exphbs from 'express-handlebars';
-import path from 'path';
+
+// server
 import { ERRORC as ErrorController } from './controllers/error.controller';
 import { CONFIG } from './keys';
 import './database';
