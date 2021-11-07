@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
 class AuthRouter {
 
@@ -10,20 +10,12 @@ class AuthRouter {
   }
 
   public buildRoutes(): void {
-    this.router.post('login', this.test);
-    this.router.post('logout', this.test);
-    this.router.post('forgot', this.test);
-    this.router.post('register', this.test);
-  }
-
-  public test(req: Request, res: Response): void {
-    res.status(201).send({
-      ok: true,
-      data : "auth"
-    });
+    this.router.post('login', );
+    this.router.post('logout', );
+    this.router.post('forgot', );
+    this.router.post('register', );
   }
   
 }
 
-const R = new AuthRouter();
-export default R.router;
+export default new AuthRouter().router;

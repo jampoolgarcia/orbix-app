@@ -14,13 +14,10 @@ class Database {
       console.log('DB is connected');
       return;
     })
-
-    this.pool.query('', );
   }
 
 }
 
-const DATABASE = new Database();
-export default DATABASE.pool;
+export default new Database().pool;
 
 

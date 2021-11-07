@@ -1,5 +1,5 @@
 // core
-import express from 'express';
+import express, { Router } from 'express';
 import path from 'path';
 
 // externals 
@@ -11,6 +11,10 @@ import exphbs from 'express-handlebars';
 import { ERRORC as ErrorController } from './controllers/error.controller';
 import { CONFIG } from './keys';
 import './database';
+
+// router
+import Routes from './routes';
+
 
 export class Server {
 
@@ -53,7 +57,8 @@ export class Server {
   }
 
   public router(): void {
-  
+    // intancia de la clase que maneja las rutas
+    new Routes(this.app);
     // middlewares manejador de errores
     this.app.use(ErrorController.registerError)
   }
