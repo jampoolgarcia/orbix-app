@@ -10,8 +10,8 @@ class CourseRouter {
   }
 
   public buildRoutes(): void {
-    this.router.post('list', this.test);
-    this.router.post('update', this.test);
+    this.router.get('list', this.test);
+    this.router.put('update', this.test);
     this.router.post('delete', this.test);
     this.router.post('register', this.test);
   }
