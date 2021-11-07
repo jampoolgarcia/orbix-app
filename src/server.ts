@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors'
 import { ERRORC as ErrorController } from './controllers/error.controller';
 import { CONFIG } from './keys';
+import './database';
 
 export class Server {
 

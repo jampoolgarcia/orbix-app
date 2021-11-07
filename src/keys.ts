@@ -3,5 +3,8 @@ export const CONFIG = {
 }
 
 export const DB = {
-  uri: 'localhost'
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'juegarobix'
 }
