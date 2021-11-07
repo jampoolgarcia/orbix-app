@@ -14,6 +14,8 @@ class Database {
       console.log('DB is connected');
       return;
     })
+
+    this.pool.query('', );
   }
 
 }
