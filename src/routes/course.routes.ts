@@ -1,4 +1,8 @@
-import { Router, Request, Response } from 'express';
+// core
+import { Router } from 'express';
+
+// controller
+import CourseController from '../controllers/course.controller';
 
 class CourseRouter {
 
@@ -6,24 +10,21 @@ class CourseRouter {
 
   constructor(){
     this.router = Router();
-    this.buildRoutes();
+    this.buildDataRoutes();
+    this.buildViewRoutes();
   }
 
-  public buildRoutes(): void {
-    this.router.get('list', this.test);
-    this.router.put('update', this.test);
-    this.router.post('delete', this.test);
-    this.router.post('register', this.test);
+  public buildDataRoutes(): void {
+    this.router.post('/register', CourseController.register);
+    // this.router.get('list', this.test);
+    // this.router.put('update', this.test);
+    // this.router.post('delete', this.test);
   }
 
-  public test(req: Request, res: Response): void {
-    res.status(201).send({
-      ok: true,
-      data : "course"
-    });
+  public buildViewRoutes(): void {
+    this.router.get('/register', CourseController.registerForm);
   }
   
 }
 
-const R = new CourseRouter();
-export default R.router;
+export default new CourseRouter().router;

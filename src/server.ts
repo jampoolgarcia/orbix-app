@@ -54,8 +54,9 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: false}));
     this.app.use(cors());
+    this.app.use(express.static(path.join(__dirname, 'public')));
   }
-
+  
   public router(): void {
     // intancia de la clase que maneja las rutas
     new Routes(this.app);

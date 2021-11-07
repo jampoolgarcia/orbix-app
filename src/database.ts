@@ -1,23 +1,8 @@
-import mysql, { Pool, MysqlError, PoolConnection, QueryOptions} from 'mysql';
+import mysql from 'mysql2/promise';
 import { DB } from './keys';
 
-class Database {
+const pool = mysql.createPool(DB)
 
-  public pool: Pool = mysql.createPool(DB);
-
-  constructor(){
-    this.pool.getConnection((err: MysqlError, connect: PoolConnection) => {
-      if(err)
-        throw err;
-    
-      if(connect) connect.release();
-      console.log('DB is connected');
-      return;
-    })
-  }
-
-}
-
-export default new Database().pool;
+export default pool;
 
 
