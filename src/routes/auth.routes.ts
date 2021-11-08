@@ -7,14 +7,22 @@ class AuthRouter {
 
   constructor(){
     this.router = Router();
-    this.buildRoutes();
+    this.buildViewRoutes();
+    this.buildDataRoutes();
   }
 
-  public buildRoutes(): void {
-    this.router.post('login', authController.login);
-    this.router.post('logout', authController.logout);
-    this.router.put('forgot', authController.forgot);
-    this.router.post('register', authController.register);
+  public buildDataRoutes(): void {
+    this.router.post('/register', authController.register);
+    this.router.post('/login', authController.login);
+    this.router.post('/logout', authController.logout);
+    this.router.put('/forgot', authController.forgot);
+  }
+
+  public buildViewRoutes(): void {
+    this.router.get('/register', authController.registerView);
+    // this.router.get('/update/:id', authController.forgotView);
+    // this.router.get('/update/:id', authController.forgotView);
+    // this.router.get('/update/:id', authController.forgotView);
   }
   
 }

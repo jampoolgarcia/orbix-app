@@ -18,7 +18,7 @@ class CourseController {
 
   async register(req: Request, res: Response): Promise<void> {
     const DATA: CourseI = req.body;
-    await pool.query(`INSERT INTO materia set ?`, [DATA]);
+    await pool.query(`INSERT INTO materia SET ?`, [DATA]);
     req.flash('success', 'Guardado exitosamente.');
     res.redirect('/api/course/list');
   }
