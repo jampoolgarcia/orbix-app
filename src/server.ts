@@ -5,10 +5,13 @@ import path from 'path';
 // externals 
 import morgan from 'morgan';
 import exphbs from 'express-handlebars';
+import flash from 'connect-flash';
+import session from 'express-session';
+import MySQLStore from 'express-mysql-session';
 
 // server
 import { ERRORC as ErrorController } from './controllers/error.controller';
-import { CONFIG } from './keys';
+import { CONFIG, DB } from './keys';
 import './database';
 
 // router
@@ -49,10 +52,25 @@ export class Server {
   }
 
   public middlewares(): void {
+    this.app.use(session({
+      secret: 'jugarobix',
+      resave: false,
+      saveUninitialized: false,
+      // @ts-ignore
+      store: new MySQLStore(DB)
+    }))
+    this.app.use(flash());
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: false}));
     this.app.use(express.static(path.join(__dirname, 'public')));
+     // Variables Globales
+    this.app.use((req, res, next) => {
+      this.app.locals.success = req.flash('success');
+      this.app.locals.warning = req.flash('warning');
+      this.app.locals.danger = req.flash('danger');
+      next();
+    })
   }
   
   public router(): void {
