@@ -6,17 +6,19 @@ class CourseController {
   
   async register(req: Request, res: Response): Promise<void> {
     const DATA: CourseI = req.body;
-    console.log(DATA)
-    const result = await pool.query('INSERT INTO materia set ?', [DATA]);
-
-    res.send({
-      ok: true,
-      result
-    })
+    await pool.query(`INSERT INTO materia set ?`, [DATA]);
+    res.send('received');
   }
 
   registerForm(req: Request, res: Response): void {
     res.render('course/register');
+  }
+
+  async getAll(req: Request, res: Response){
+    const DATA = await pool.query(`SELECT * FROM materia`);
+    const LIST = DATA[0];
+    
+    res.render('course/list', { list: LIST });
   }
 }
 
