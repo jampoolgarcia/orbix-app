@@ -17,8 +17,9 @@ class CourseRouter {
   public buildDataRoutes(): void {
     this.router.post('/register', CourseController.register);
     this.router.get('/list', CourseController.getAll);
-    // this.router.put('update', this.test);
-    // this.router.post('delete', this.test);
+    this.router.get('/delete/:id', CourseController.delete);
+    // this.router.put('/update/:id', this.test);
+    
   }
 
   public buildViewRoutes(): void {

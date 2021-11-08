@@ -3,13 +3,13 @@
     {{#each list}}
       <div class="col-md-3">
         <div class="card text-center">
-          <div class="card-body">
+          <div class="card-body shadow">
             <h3 class="card-title text-uppercase">
               {{nombre}}
             </h3>
             <p class="m-2">{{nivel}}</p>
-            <a href="" class="btn btn-danger">Eliminar</a>
-            <a href="" class="btn btn-secondary">Actualizar</a>
+            <a href="/api/course/delete/{{id}}" class="btn btn-danger">Eliminar</a>
+            <a href="/api/course/update/{{id}}" class="btn btn-secondary">Actualizar</a>
           </div>
         </div>
       </div>
