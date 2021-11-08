@@ -3,20 +3,20 @@
     <div class="col-md-4 mx-auto">
       <div class="card shadow">
          <div class="card-header">
-          <h5 class="card-title">Registro de Materia</h5>
+          <h5 class="card-title">Editar Materia</h5>
         </div>
         <div class="card-body">
-          <form action="/api/course/register" method="POST">
+          <form action="/api/course/update/{{data.id}}" method="POST">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nivel nombre." required>
+              <input type="text" value="{{data.nombre}}" name="nombre" class="form-control" placeholder="Ingrese el nivel nombre." required>
             </div>
             <div class="mb-3">
               <label for="nivel" class="form-label">Nivel</label>
-              <input type="text" name="nivel" class="form-control" placeholder="Ingrese el nivel." required>
+              <input type="text" value="{{data.nivel}}" name="nivel" class="form-control" placeholder="Ingrese el nivel." required>
             </div>
             <div class="mb-3">
-              <button type="submit" class="btn btn-success w-100">Registrar</button>
+              <button type="submit" class="btn btn-success w-100">Actualizar</button>
             </div>
           </form>
         </div>

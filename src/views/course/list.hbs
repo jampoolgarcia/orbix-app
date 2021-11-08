@@ -13,6 +13,13 @@
           </div>
         </div>
       </div>
+    {{else}}
+      <div class="col-md-4 mx-auto">
+        <div class="card card-body text-center shadow">
+          <p>No hay materias registradas... </p>
+          <a href="/api/course/register">Agregar una materia.</a>
+        </div>
+      </div>
     {{/each}}
   </div>
 </div>

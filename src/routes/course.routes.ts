@@ -18,12 +18,13 @@ class CourseRouter {
     this.router.post('/register', CourseController.register);
     this.router.get('/list', CourseController.getAll);
     this.router.get('/delete/:id', CourseController.delete);
-    // this.router.put('/update/:id', this.test);
+    this.router.post('/update/:id', CourseController.update);
     
   }
 
   public buildViewRoutes(): void {
-    this.router.get('/register', CourseController.registerForm);
+    this.router.get('/register', CourseController.registerView);
+    this.router.get('/update/:id', CourseController.updateView);
   }
   
 }
