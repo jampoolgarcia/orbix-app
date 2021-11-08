@@ -4,7 +4,6 @@ import path from 'path';
 
 // externals 
 import morgan from 'morgan';
-import cors from 'cors'
 import exphbs from 'express-handlebars';
 
 // server
@@ -53,7 +52,6 @@ export class Server {
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: false}));
-    this.app.use(cors());
     this.app.use(express.static(path.join(__dirname, 'public')));
   }
   
