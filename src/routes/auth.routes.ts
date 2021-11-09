@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import authController from '../controllers/auth.controller';
+import { Request, Response, Router } from 'express';
+import passport from 'passport';
 
 class AuthRouter {
 
@@ -12,17 +12,31 @@ class AuthRouter {
   }
 
   public buildDataRoutes(): void {
-    this.router.post('/register', authController.register);
-    this.router.post('/login', authController.login);
-    this.router.post('/logout', authController.logout);
-    this.router.put('/forgot', authController.forgot);
+    this.router.get('/logout', (req: Request, res: Response) => {
+      req.logOut();
+      res.redirect('/login');
+    });
+    
+    this.router.post('/register', passport.authenticate('local.register', {
+      successRedirect: '/course/list',
+      failureRedirect: '/register',
+      failureFlash: true
+    }));
+
+    this.router.post('/login', passport.authenticate('local.login', {
+      successRedirect: '/course/list',
+      failureRedirect: '/login',
+      failureFlash: true
+    }));
   }
 
   public buildViewRoutes(): void {
-    this.router.get('/register', authController.registerView);
-    // this.router.get('/update/:id', authController.forgotView);
-    // this.router.get('/update/:id', authController.forgotView);
-    // this.router.get('/update/:id', authController.forgotView);
+    this.router.get('/register', (req: Request, res: Response) => {
+      res.render('auth/register')
+    });
+    this.router.get('/login', (req: Request, res: Response) => {
+      res.render('auth/login')
+    });
   }
   
 }

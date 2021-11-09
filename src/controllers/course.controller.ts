@@ -20,7 +20,7 @@ class CourseController {
     const DATA: CourseI = req.body;
     await pool.query(`INSERT INTO materia SET ?`, [DATA]);
     req.flash('success', 'Guardado exitosamente.');
-    res.redirect('/api/course/list');
+    res.redirect('/course/list');
   }
 
   async getAll(req: Request, res: Response): Promise<void>{
@@ -33,7 +33,7 @@ class CourseController {
     const { id } = req.params;
     await pool.query(`DELETE FROM materia WHERE ID = ?`, [id]);
     req.flash('danger', `Eliminado de forma exitosa.`);
-    res.redirect('/api/course/list');
+    res.redirect('/course/list');
   }
 
   async update(req: Request, res: Response): Promise<void> {
@@ -41,7 +41,7 @@ class CourseController {
     const DATA: CourseI = req.body;
     await pool.query('UPDATE materia SET ? WHERE ID = ?;', [DATA, id]);
     req.flash('warning', 'Actualizado de forma exitosa.');
-    res.redirect('/api/course/list');
+    res.redirect('/course/list');
   }
 }
 

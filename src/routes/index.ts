@@ -10,11 +10,11 @@ import studentRoutes from './student.routes';
 
 export default class Router {
   constructor(app: Application){
-    app.use('/api/auth', authRouter);
-    app.use('/api/teacher', teacherRouter);
-    app.use('/api/question', questionsRoutes);
-    app.use('/api/course', courseRoutes);
-    app.use('/api/student', studentRoutes);
+    app.use('/', authRouter);
+    app.use('/teacher', teacherRouter);
+    app.use('/question', questionsRoutes);
+    app.use('/course', courseRoutes);
+    app.use('/student', studentRoutes);
     // app.use('**', (req: Request, res: Response) => {
     //   res.redirect('local/api/auth');
     // })

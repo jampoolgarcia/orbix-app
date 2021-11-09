@@ -9,6 +9,10 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 
+// auth 
+import passport from 'passport';
+import './lib/passport';
+
 // server
 import { ERRORC as ErrorController } from './controllers/error.controller';
 import { CONFIG, DB } from './keys';
@@ -64,7 +68,10 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: false}));
     this.app.use(express.static(path.join(__dirname, 'public')));
-     // Variables Globales
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
+    
+    // Variables Globales
     this.app.use((req, res, next) => {
       this.app.locals.success = req.flash('success');
       this.app.locals.warning = req.flash('warning');
