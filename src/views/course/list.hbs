@@ -8,8 +8,8 @@
               {{nombre}}
             </h3>
             <p class="m-2">{{nivel}}</p>
-            <a href="/api/course/delete/{{id}}" class="btn btn-danger">Eliminar</a>
-            <a href="/api/course/update/{{id}}" class="btn btn-secondary">Actualizar</a>
+            <a href="/course/delete/{{id}}" class="btn btn-danger">Eliminar</a>
+            <a href="/course/update/{{id}}" class="btn btn-secondary">Actualizar</a>
           </div>
         </div>
       </div>
@@ -17,7 +17,7 @@
       <div class="col-md-4 mx-auto">
         <div class="card card-body text-center shadow">
           <p>No hay materias registradas... </p>
-          <a href="/api/course/register">Agregar una materia.</a>
+          <a href="/course/register">Agregar una materia.</a>
         </div>
       </div>
     {{/each}}

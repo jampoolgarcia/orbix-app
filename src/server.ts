@@ -30,6 +30,7 @@ export class Server {
     this.app = express();
     this.config();
     this.middlewares();
+    this.variable();
     this.router();
   }
 
@@ -70,12 +71,15 @@ export class Server {
     this.app.use(express.static(path.join(__dirname, 'public')));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
-    
-    // Variables Globales
+  }
+
+  // Variables Globales
+  public variable(){
     this.app.use((req, res, next) => {
       this.app.locals.success = req.flash('success');
       this.app.locals.warning = req.flash('warning');
       this.app.locals.danger = req.flash('danger');
+      this.app.locals.user = req.user;
       next();
     })
   }

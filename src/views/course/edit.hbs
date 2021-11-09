@@ -6,7 +6,7 @@
           <h5 class="card-title">Editar Materia</h5>
         </div>
         <div class="card-body">
-          <form action="/api/course/update/{{data.id}}" method="POST">
+          <form action="/course/update/{{data.id}}" method="POST">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input type="text" value="{{data.nombre}}" name="nombre" class="form-control" placeholder="Ingrese el nombre." autofocus required>
