@@ -1,4 +1,6 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import studentController from '../controllers/student.controller';
+import auth from '../lib/auth';
 
 class StudentRouter {
 
@@ -10,17 +12,9 @@ class StudentRouter {
   }
 
   public buildRoutes(): void {
-    this.router.get('score-list', this.test);
+    this.router.get('/score-list', auth.LoggedIn, studentController.listView);
   }
 
-  public test(req: Request, res: Response): void {
-    res.status(201).send({
-      ok: true,
-      data : "student"
-    });
-  }
-  
 }
 
-const R = new StudentRouter();
-export default R.router;
+export default new StudentRouter().router;

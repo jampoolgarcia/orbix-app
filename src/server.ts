@@ -46,7 +46,20 @@ export class Server {
       defaultLayout: 'main',
       layoutsDir: path.join(this.app.get('views'), 'layouts'),
       partialsDir: path.join(this.app.get('views'), 'partials'),
-      extname: '.hbs'
+      extname: '.hbs',
+      helpers: {
+        math: function(lvalue: any, operator: string, rvalue: any) {
+            lvalue = parseFloat(lvalue);
+            rvalue = parseFloat(rvalue);
+            return {
+                "+": lvalue + rvalue,
+                "-": lvalue - rvalue,
+                "*": lvalue * rvalue,
+                "/": lvalue / rvalue,
+                "%": lvalue % rvalue
+            }[operator];
+        }
+      }
     }))
   }
 
