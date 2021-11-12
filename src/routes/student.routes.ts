@@ -13,6 +13,7 @@ class StudentRouter {
 
   public buildRoutes(): void {
     this.router.get('/score-list', auth.LoggedIn, studentController.listView);
+    this.router.post('/login', auth.LoggedOut, studentController.login);
   }
 
 }
