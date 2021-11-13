@@ -17,6 +17,8 @@ class StudentController {
   async login(req: Request, res: Response) {
     const { usuario, clave } = req.query;
 
+    console.log('usuario', usuario);
+
     if (usuario == null || clave == null)
       return res.send("Usuario y clave invalidos.");
 
@@ -34,9 +36,9 @@ class StudentController {
 
       if (!isValid) return res.send("La clave es incorrecta.");
 
-      const ROWS = await pool.query(`SELECT * FROM pregunta`);
+      const QUESTIONS = await pool.query(`SELECT * FROM pregunta`);
       //@ts-ignore
-      const LIST = ROWS[0].map((el: any) => {
+      const LIST = QUESTIONS[0].map((el: any) => {
         const Q: QuestionI = {
           id: el.id,
           pk_materia: el.pk_materia,
@@ -60,7 +62,7 @@ class StudentController {
   async register(req: Request, res: Response) {
     const DATA: StudentI = req.body;
     DATA.puntos = 0;
-    DATA.clave = "";
+    DATA.clave = await helpers.encryptPassword(DATA.clave);
     await pool.query(`INSERT INTO estudiante SET ?`, [DATA]);
     const ROWS = await pool.query(`SELECT * FROM pregunta`);
     //@ts-ignore
