@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import pool from '../database';
 import { StudentI } from '../models/student';
 import helpers from '../lib/helpers';
+import { QuestionI } from '../models/question';
  
 class StudentController {
 
@@ -26,13 +27,35 @@ class StudentController {
       let c = clave.toString()
       const isValid = helpers.matchPassword(c, DATA.clave);
       
-      if(!isValid) res.send('La clave es incorrecta.');
+      if(!isValid) return res.send('La clave es incorrecta.');
       
+      const ROWS = await pool.query(`SELECT * FROM pregunta`);
+      //@ts-ignore
+      const LIST = DATA[0].map( (el: any) => {
+        const Q: QuestionI = {
+          id: el.id,
+          pk_materia: el.pk_materia,
+          pregunta: el.pregunta,
+          descripcion: el.descripcion,
+          fecha_registro: el.fecha_registro,
+          fecha_actualizacion: el.fecha_actualizacion,
+          respuesta: el.respuestas.split(';')[el.correcta],
+          correcta: el.correcta,
+          respuestas: el.respuestas.split(';')
+        }
+        return Q;
+      }
+    );
 
-      res.send({ DATA });
+      res.send({ data: DATA, questions: LIST });
       
+    }else {
+      return res.send('El usuario ingresado no se encuentra registrado.')
+    }
+  }
 
-    } 
+  async register(req: Request, res: Response) {
+
   }
 
 }
