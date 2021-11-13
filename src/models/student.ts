@@ -6,3 +6,4 @@ export interface StudentI {
   apellido: string;
   puntos: number;
 }
+
