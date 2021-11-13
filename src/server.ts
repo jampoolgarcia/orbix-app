@@ -4,6 +4,7 @@ import path from 'path';
 
 // externals 
 import morgan from 'morgan';
+import cors from 'cors';
 import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import session from 'express-session';
@@ -75,6 +76,7 @@ export class Server {
       store: new MySQLStore(DB)
     }))
     this.app.use(flash());
+    this.app.use(cors());
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: false}));
