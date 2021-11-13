@@ -22,24 +22,36 @@ class QuestionController {
     const DATA: any = req.body;
     const Q: QuestionI = {
       pregunta: DATA.pregunta,
-      descriccion: DATA.descriccion,
+      descripcion: DATA.descripcion,
       fecha_registro: new Date(),
       pk_materia: parseInt(DATA.materia),
-      respuestas: `${DATA.respuesta1};${DATA.respuesta2};${DATA.respuesta3};${DATA.respuesta4};`,
+      respuestas: `${DATA.respuesta1};${DATA.respuesta2};${DATA.respuesta3};${DATA.respuesta4}`,
       correcta: parseInt(DATA.correcta)
     }
-    res.send({
-      Q
-    })
-    // const DATA: QuestionI = req.body;
-    // await pool.query(`INSERT INTO pregunta SET ?`, [DATA]);
-    // req.flash('success', 'Guardado exitosamente.');
-    // res.redirect('/question/list');
+    await pool.query(`INSERT INTO pregunta SET ?`, [Q]);
+    req.flash('success', 'Guardado exitosamente.');
+    res.redirect('/question/list');
   }
 
   async getAll(req: Request, res: Response): Promise<void>{
     const DATA = await pool.query(`SELECT * FROM pregunta`);
-    const LIST = DATA[0];
+    //@ts-ignore
+    const LIST = DATA[0].map( (el: any) => {
+        const Q: QuestionI = {
+          id: el.id,
+          pk_materia: el.pk_materia,
+          pregunta: el.pregunta,
+          descripcion: el.descripcion,
+          fecha_registro: el.fecha_registro,
+          respuesta: el.respuestas.split(';')[el.correcta],
+          correcta: el.correcta,
+          respuestas: el.respuestas
+        }
+        return Q;
+      }
+    );
+      console.log(LIST)
+
     res.render('question/list', { list: LIST });
   }
 

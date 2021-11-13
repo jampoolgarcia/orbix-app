@@ -8,6 +8,8 @@ import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
+// @ts-ignore
+import date from 'helper-date';
 
 // auth 
 import passport from 'passport';
@@ -59,13 +61,7 @@ export class Server {
                 "%": lvalue % rvalue
             }[operator];
         },
-        setChecked: function(value: string, currentValue: string) {
-          if ( value == currentValue ) {
-            return "checked";
-         } else {
-            return "";
-         }
-      },
+        dateFormat: date
       }
     }))
   }
