@@ -12,10 +12,13 @@ class QuestionController {
 
   async updateView(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
+    const ROWS = await pool.query(`SELECT * FROM materia`);
     const DATA = await pool.query(`SELECT * FROM pregunta WHERE ID = ?`, [id]);
     // @ts-ignore
-    const ELEMENT = DATA[0][0]
-    res.render('question/edit', { data: ELEMENT });
+    const ELEMENT = DATA[0][0];
+    ELEMENT.respuestas = ELEMENT.respuestas.split(';');
+    const LIST = ROWS[0];
+    res.render('question/edit', { data: ELEMENT, list: LIST });
   }
 
   async register(req: Request, res: Response): Promise<void> {

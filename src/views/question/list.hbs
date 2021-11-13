@@ -2,39 +2,39 @@
   {{#if list}}
   <div class="table-responsive">
     <table class="table table-hover mx-auto shadow caption-top">
-  <caption>Listado de preguntas</caption>
-  <thead class="table-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Pregunta</th>
-      <th scope="col">Respuesta</th>
-      <th scope="col">Descripciòn</th>
-      <th scope="col">Fecha Registro</th>
-      <th scope="col">Fecha Actualizacion</th>
-      <th scope="col">Procesos</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each list}}
-    <tr>
-      <th scope="row">{{math @index "+" 1}}</th>
-      <td>{{pregunta}}</td>
-      <td>{{respuesta}}</td>
-      <td>{{descripcion}}</td>
-      <td>{{dateFormat fecha_registro "DD-MM-YYYY"}}</td>
-      <td>{{dateFormat fecha_actualizacion "DD-MM-YYYY"}}</td>
-      <td>
-        <a href="/question/update/{{id}}">Editar</a>
-        <a href="/question/delete/{{id}}">Eliminar</a>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-  </table>
+      <caption>Listado de preguntas</caption>
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Pregunta</th>
+          <th scope="col">Respuesta</th>
+          <th scope="col">Descripciòn</th>
+          <th scope="col">Fecha Registro</th>
+          <th scope="col">Fecha Actualizacion</th>
+          <th scope="col">Procesos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each list}}
+        <tr>
+          <th scope="row">{{math @index "+" 1}}</th>
+          <td>{{pregunta}}</td>
+          <td>{{respuesta}}</td>
+          <td>{{descripcion}}</td>
+          <td>{{dateFormat fecha_registro "DD-MM-YYYY"}}</td>
+          <td>{{dateFormat fecha_actualizacion "DD-MM-YYYY"}}</td>
+          <td>
+            <a href="/question/update/{{id}}">Editar</a>
+            <a href="/question/delete/{{id}}">Eliminar</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   {{else}}
   <div class="card shadow">
     <div class="card-body">
-      <h5 class="card-title">No hay estudiantes registrados...</h5>
+      <h5 class="card-title">No hay preguntas registradas...</h5>
     </div>
   </div>
   </div>

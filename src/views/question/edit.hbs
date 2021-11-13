@@ -1,1 +1,68 @@
-<p>edit</p>
+<div class="container p-4">
+  <div class="col-md-7 col-lg-8 mx-auto">
+    <div class="card shadow">
+      <div class="card-header">
+        <h4 class="mb-3 card-title">Editar pregunta</h4>
+      </div>
+      <div class="card-body">
+        <form class="needs-validation" action="/question/update/{{data.id}}" method="POST" novalidate>
+          <div class="row g-3">
+            
+            <div class="col-sm-6">
+              <label for="pregunta" class="form-label">Pregunta</label>
+              <input type="text" class="form-control" value="{{data.pregunta}}" name="pregunta" placeholder="Ingrese la pregunta." required>
+              <div class="invalid-feedback">
+                Se requiere una pregunta válida.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="materia" class="form-label">
+                  Materia
+                </label>
+                  <select class="form-select" value="{{data.pk_materia}}" name="materia" required>
+                    <option disabled>Seleccionar...</option>
+                    {{#each list}}
+                    <option value="{{id}}" {{#ifCond id ../data.pk_materia }} selected {{/ifCond}} >{{nombre}} - {{nivel}}</option>
+                    {{else}}
+                    <option value="">No hay materias registradas.</option>
+                    {{/each}}
+                  </select>
+                  <div class="invalid-feedback">
+                    Seleccione un materia válida.
+                  </div>
+            </div>
+
+            <div class="col-12">
+              <label for="descripción" class="form-label">Descripción</label>
+              <input type="text" class="form-control" value="{{data.descripcion}}" name="descripcion" placeholder="Ingrese una descripción de la pregunta." required>
+              <div class="invalid-feedback">                 
+                La descripción es requerida.
+              </div>
+            </div>
+
+             <hr class="my-4">
+
+            {{#each data.respuestas }}
+              <div class="col-sm-6">
+               <label for="respuesta1" class="form-label">Respuesta {{math @index "+" 1}} - {{@index}}</label>
+               <div class="input-group">
+                <input type="text" class="form-control" name="respuesta{{math @index "+" 1}}"  value="{{this}}" placeholder="Ingrese la respuesta." required>
+                <div class="input-group-text">
+                  <input class="form-check-input mt-0" name="correcta" value="0" type="radio" {{#ifCond @index ../data.correcta}} checked {{/ifCond}}>
+                </div>
+                <div class="invalid-feedback">
+                  Se requiere una respuesta válida.
+                </div>
+               </div>
+              </div>
+            {{/each}}
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Registrar</button>
+        </form>
+      </div>
+    </div>    
+  </div>
+</div>

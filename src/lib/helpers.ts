@@ -17,6 +17,25 @@ class Helpers {
     return false;
   }
 
+  math(lvalue: any, operator: string, rvalue: any): any {
+    lvalue = parseFloat(lvalue);
+    rvalue = parseFloat(rvalue);
+    return {
+        "+": lvalue + rvalue,
+        "-": lvalue - rvalue,
+        "*": lvalue * rvalue,
+        "/": lvalue / rvalue,
+        "%": lvalue % rvalue
+    }[operator];
+  }
+
+  ifCond(v1: any, v2: any, options: any): any {
+    if(v1 === v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  }
+
 }
 
 export default new Helpers();

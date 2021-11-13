@@ -8,6 +8,9 @@ import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
+
+// helpers
+import helpers from './lib/helpers';
 // @ts-ignore
 import date from 'helper-date';
 
@@ -50,18 +53,9 @@ export class Server {
       partialsDir: path.join(this.app.get('views'), 'partials'),
       extname: '.hbs',
       helpers: {
-        math: function(lvalue: any, operator: string, rvalue: any) {
-            lvalue = parseFloat(lvalue);
-            rvalue = parseFloat(rvalue);
-            return {
-                "+": lvalue + rvalue,
-                "-": lvalue - rvalue,
-                "*": lvalue * rvalue,
-                "/": lvalue / rvalue,
-                "%": lvalue % rvalue
-            }[operator];
-        },
-        dateFormat: date
+        math: helpers.math,
+        dateFormat: date,
+        ifCond: helpers.ifCond,
       }
     }))
   }
