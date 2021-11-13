@@ -1,29 +1,31 @@
 import { Router, Request, Response } from 'express';
+import QuestionController from '../controllers/question.controller';
+
+// auth
+import auth from '../lib/auth';
 
 class QuestionRouter {
 
-  public router: Router;
+  public router: Router = Router();
 
   constructor(){
-    this.router = Router();
-    this.buildRoutes();
+    this.buildDataRoutes();
+    this.buildViewRoutes();
   }
 
-  public buildRoutes(): void {
-    this.router.get('list', this.test);
-    this.router.put('update', this.test);
-    this.router.post('delete', this.test);
-    this.router.post('register', this.test);
+  public buildDataRoutes(): void {
+    this.router.post('/register', auth.LoggedIn, QuestionController.register);
+    this.router.get('/list', auth.LoggedIn, QuestionController.getAll);
+    this.router.get('/delete/:id', auth.LoggedIn, QuestionController.delete);
+    this.router.post('/update/:id', auth.LoggedIn, QuestionController.update);
+    
   }
 
-  public test(req: Request, res: Response): void {
-    res.status(201).send({
-      ok: true,
-      data : "question"
-    });
+  public buildViewRoutes(): void {
+    this.router.get('/register', auth.LoggedIn, QuestionController.registerView);
+    this.router.get('/update/:id', auth.LoggedIn, QuestionController.updateView);
   }
   
 }
 
-const R = new QuestionRouter();
-export default R.router;
+export default new QuestionRouter().router;

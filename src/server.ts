@@ -58,7 +58,14 @@ export class Server {
                 "/": lvalue / rvalue,
                 "%": lvalue % rvalue
             }[operator];
-        }
+        },
+        setChecked: function(value: string, currentValue: string) {
+          if ( value == currentValue ) {
+            return "checked";
+         } else {
+            return "";
+         }
+      },
       }
     }))
   }
