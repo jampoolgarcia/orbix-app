@@ -21,7 +21,7 @@
                   Materia
                 </label>
                   <select class="form-select" value="{{data.pk_materia}}" name="materia" required>
-                    <option disabled>Seleccionar...</option>
+                    <option disabled value="">Seleccionar...</option>
                     {{#each list}}
                     <option value="{{id}}" {{#ifCond id ../data.pk_materia }} selected {{/ifCond}} >{{nombre}} - {{nivel}}</option>
                     {{else}}
@@ -49,7 +49,7 @@
                <div class="input-group">
                 <input type="text" class="form-control" name="respuesta{{math @index "+" 1}}"  value="{{this}}" placeholder="Ingrese la respuesta." required>
                 <div class="input-group-text">
-                  <input class="form-check-input mt-0" name="correcta" value="0" type="radio" {{#ifCond @index ../data.correcta}} checked {{/ifCond}}>
+                  <input class="form-check-input mt-0" name="correcta" value="{{@index}}" type="radio" {{#ifCond @index ../data.correcta}} checked {{/ifCond}}>
                 </div>
                 <div class="invalid-feedback">
                   Se requiere una respuesta válida.

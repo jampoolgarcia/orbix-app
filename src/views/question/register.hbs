@@ -21,7 +21,7 @@
                   Materia
                 </label>
                   <select class="form-select" name="materia" required>
-                    <option selected>Seleccionar...</option>
+                    <option selected disabled value="">Seleccionar...</option>
                     {{#each list}}
                     <option value="{{id}}">{{nombre}} - {{nivel}}</option>
                     {{else}}

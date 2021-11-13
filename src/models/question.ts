@@ -3,8 +3,8 @@ export interface QuestionI {
   pk_materia: number;
   pregunta: string;
   descripcion: string;
-  fecha_registro: Date;
-  fecha_actualizacion?: Date;
+  fecha_registro?: Date;
+  fecha_actualizacion: Date;
   respuesta?: string;
   respuestas: String[] | String;
   correcta: number;

@@ -4,5 +4,3 @@
 # compiled output
 /build
 
-# bootstrap
-**/bootstrap

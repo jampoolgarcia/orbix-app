@@ -27,6 +27,7 @@ class QuestionController {
       pregunta: DATA.pregunta,
       descripcion: DATA.descripcion,
       fecha_registro: new Date(),
+      fecha_actualizacion: new Date(),
       pk_materia: parseInt(DATA.materia),
       respuestas: `${DATA.respuesta1};${DATA.respuesta2};${DATA.respuesta3};${DATA.respuesta4}`,
       correcta: parseInt(DATA.correcta)
@@ -46,6 +47,7 @@ class QuestionController {
           pregunta: el.pregunta,
           descripcion: el.descripcion,
           fecha_registro: el.fecha_registro,
+          fecha_actualizacion: el.fecha_actualizacion,
           respuesta: el.respuestas.split(';')[el.correcta],
           correcta: el.correcta,
           respuestas: el.respuestas
@@ -53,7 +55,6 @@ class QuestionController {
         return Q;
       }
     );
-      console.log(LIST)
 
     res.render('question/list', { list: LIST });
   }
@@ -62,15 +63,23 @@ class QuestionController {
     const { id } = req.params;
     await pool.query(`DELETE FROM pregunta WHERE ID = ?`, [id]);
     req.flash('danger', `Eliminado de forma exitosa.`);
-    res.redirect('/pregunta/list');
+    res.redirect('/question/list');
   }
 
   async update(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    const DATA: QuestionI = req.body;
-    await pool.query('UPDATE pregunta SET ? WHERE ID = ?;', [DATA, id]);
+    const DATA: any = req.body;
+    const Q: QuestionI = {
+      pregunta: DATA.pregunta,
+      descripcion: DATA.descripcion,
+      fecha_actualizacion: new Date(),
+      pk_materia: parseInt(DATA.materia),
+      respuestas: `${DATA.respuesta1};${DATA.respuesta2};${DATA.respuesta3};${DATA.respuesta4}`,
+      correcta: parseInt(DATA.correcta)
+    }
+    await pool.query('UPDATE pregunta SET ? WHERE ID = ?;', [Q, id]);
     req.flash('warning', 'Actualizado de forma exitosa.');
-    res.redirect('/pregunta/list');
+    res.redirect('/question/list');
   }
 }
 
