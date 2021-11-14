@@ -1,22 +1,48 @@
 <div class="container p-4">
   <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-6 mx-auto">
       <div class="card shadow">
-         <div class="card-header">
-          <h5 class="card-title">Registro de Materia</h5>
+        <div class="card-header d-flex justify-content-between">
+          <h5 class="mb-3 card-title">Registro de Materia</h5>
+          <a href="/course/list" class="btn-close" aria-label="Close"></a>
         </div>
         <div class="card-body">
-          <form action="/course/register" method="POST">
+          <form
+            class="needs-validation"
+            action="/course/register"
+            method="POST"
+          >
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nombre." autofocus required>
+              <input
+                type="text"
+                name="nombre"
+                class="form-control"
+                placeholder="Ingrese el nombre."
+                minlength="3"
+                maxlength="25"
+                autofocus
+                required
+              />
             </div>
             <div class="mb-3">
               <label for="nivel" class="form-label">Nivel</label>
-              <input type="text" name="nivel" class="form-control" placeholder="Ingrese el nivel." required>
+              <input
+                type="text"
+                name="nivel"
+                class="form-control"
+                minlength="2"
+                maxlength="25"
+                placeholder="Ingrese el nivel."
+                required
+              />
             </div>
-            <div class="mb-3">
-              <button type="submit" class="btn btn-success w-100">Registrar</button>
+            <hr class="my-4">
+
+            <button
+                type="submit"
+                class="w-100 btn btn-primary btn-lg"
+            >Registrar</button>
             </div>
           </form>
         </div>

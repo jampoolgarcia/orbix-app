@@ -1,8 +1,9 @@
 <div class="container p-4">
   <div class="col-md-7 col-lg-8 mx-auto">
     <div class="card shadow">
-      <div class="card-header">
+      <div class="card-header d-flex justify-content-between">
         <h4 class="mb-3 card-title">Registro de preguntas</h4>
+        <a href="/question/list" class="btn-close" aria-label="Close"></a>
       </div>
       <div class="card-body">
         <form class="needs-validation" action="/question/register" method="POST" novalidate>
@@ -10,7 +11,8 @@
             
             <div class="col-sm-6">
               <label for="pregunta" class="form-label">Pregunta</label>
-              <input type="text" class="form-control" name="pregunta" placeholder="Ingrese la pregunta." value="" autofocus required>
+              <input type="text" class="form-control" name="pregunta" placeholder="Ingrese la pregunta."  minlength="4"
+                maxlength="100" autofocus required>
               <div class="invalid-feedback">
                 Se requiere una pregunta válida.
               </div>
@@ -35,7 +37,8 @@
 
             <div class="col-12">
               <label for="descripción" class="form-label">Descripción</label>
-              <input type="text" class="form-control" name="descripcion" placeholder="Ingrese una descripción de la pregunta." required>
+              <input type="text" class="form-control" minlength="4"
+                maxlength="100" name="descripcion" placeholder="Ingrese una descripción de la pregunta." required>
               <div class="invalid-feedback">                 
                 La descripción es requerida.
               </div>
@@ -46,9 +49,10 @@
              <div class="col-sm-6">
                 <label for="respuesta1" class="form-label">Respuesta 1</label>
                <div class="input-group">
-                <input type="text" class="form-control" name="respuesta1" placeholder="Ingrese la respuesta." required>
+                <input type="text" class="form-control" name="respuesta1"
+                maxlength="100" placeholder="Ingrese la respuesta." required>
                 <div class="input-group-text">
-                  <input class="form-check-input mt-0" name="correcta" value="0" type="radio" checked>
+                  <input class="form-check-input mt-0" name="correcta" value="0" maxlength="100" type="radio" checked>
                 </div>
                 <div class="invalid-feedback">
                   Se requiere una respuesta válida.
