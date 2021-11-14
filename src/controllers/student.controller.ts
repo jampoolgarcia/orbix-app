@@ -66,7 +66,25 @@ class StudentController {
   }
 
   async register(req: Request, res: Response) {
+    
     const DATA: StudentI = req.body;
+    
+    if(DATA.nombre.length <= 0 || DATA.apellido.length <= 0 || DATA.usuario.length <= 0 || DATA.clave.length <= 0) return res.status(400).send({
+      code: 1,
+      msg: "Datos invalidos."
+    })
+
+    const UNIQUE = await pool.query(
+      "SELECT * FROM estudiante WHERE usuario = ?",
+      [DATA.usuario]
+    );
+
+    // @ts-ignore
+    if (UNIQUE[0].length > 0) return res.status(401).send({
+      code: 1,
+      msg: 'El usuario ya existe.'
+    });
+
     DATA.puntos = 0;
     DATA.clave = await helpers.encryptPassword(DATA.clave);
     await pool.query(`INSERT INTO estudiante SET ?`, [DATA]);
