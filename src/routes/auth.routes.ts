@@ -19,13 +19,13 @@ class AuthRouter {
     });
     
     this.router.post('/register', auth.LoggedOut, passport.authenticate('local.register', {
-      successRedirect: '/course/list',
+      successRedirect: '/question/list',
       failureRedirect: '/register',
       failureFlash: true
     }));
 
     this.router.post('/login', auth.LoggedOut, passport.authenticate('local.login', {
-      successRedirect: '/course/list',
+      successRedirect: '/question/list',
       failureRedirect: '/login',
       failureFlash: true
     }));

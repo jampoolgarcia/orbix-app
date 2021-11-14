@@ -1,7 +1,7 @@
-// Ejemplo de JavaScript de inicio para deshabilitar el envío de formularios si hay campos no válidos
-(function () {
-  'use strict'
+'use strict'
 
+// Ejemplo de JavaScript de inicio para deshabilitar el envío de formularios si hay campos no válidos
+const formValid = () => {
   // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
   var forms = document.querySelectorAll('.needs-validation')
 
@@ -17,4 +17,14 @@
         form.classList.add('was-validated')
       }, false)
     })
-})()
+}
+
+const sidebar = () => {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+    new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+}
+
+formValid();
+sidebar();
