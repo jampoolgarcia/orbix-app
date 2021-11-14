@@ -93,7 +93,7 @@ class StudentController {
 
   async updateScore(req: Request, res: Response){
     const { id, score } = req.query;
-    await pool.query('UPDATE  SET puntos = puntos + ? WHERE ID = ?;', [score, id]);
+    await pool.query(`UPDATE estudiante SET puntos = puntos + ? WHERE ID = ?;`, [score, id]);
     return res.send({
       code: 0,
       msg: "Actualizado de forma exitosa."
