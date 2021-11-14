@@ -24,8 +24,12 @@
           <td>{{dateFormat fecha_registro "DD-MM-YYYY"}}</td>
           <td>{{dateFormat fecha_actualizacion "DD-MM-YYYY"}}</td>
           <td>
-            <a href="/question/update/{{id}}">Editar</a>
-            <a href="/question/delete/{{id}}">Eliminar</a>
+            <a href="/question/update/{{id}}">
+              <img class="bi me-2" width="16" height="16" src="/icon/edit.svg" alt="update">
+            </a>
+            <a href="/question/delete/{{id}}">
+              <img class="bi me-2" width="16" height="16" src="/icon/delete.svg" alt="delete">
+            </a>
           </td>
         </tr>
         {{/each}}
