@@ -13,8 +13,10 @@
 </head>
 <body>
 
-  {{> navigation }}
-
+  {{#if user}}
+    {{> navigation }}
+  {{/if}}
+  
   {{> message }}
 
   {{{ body }}}
