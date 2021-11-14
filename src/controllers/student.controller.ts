@@ -17,8 +17,8 @@ class StudentController {
   async login(req: Request, res: Response) {
     const { usuario, clave } = req.body;
 
-    if (usuario == null || clave == null)
-      return res.send({
+    if (usuario == null || usuario.length == 0 || clave == null || clave.length == 0)
+      return res.status(400).send({
         code: 1,
         msg: "Usuario y clave invalidos."
       });
@@ -33,9 +33,8 @@ class StudentController {
       // @ts-ignore
       const DATA: StudentI = ROWS[0][0];
       let c = clave.toString();
-      const isValid = helpers.matchPassword(c, DATA.clave);
-
-      if (!isValid) return res.send({
+      const isValid = await helpers.matchPassword(c, DATA.clave);
+      if (!isValid) return res.status(401).send({
         code: 2,
         msg: "La clave es incorrecta.",
       });
@@ -59,7 +58,7 @@ class StudentController {
 
       res.send({ code: 0, msg: "Registro exitoso.", data: DATA, questions: LIST });
     } else {
-      return res.send({
+      return res.status(404).send({
         code: 1,
         msg: "El usuario ingresado no se encuentra registrado."
       });
