@@ -15,12 +15,13 @@ class StudentController {
   }
 
   async login(req: Request, res: Response) {
-    const { usuario, clave } = req.query;
-
-    console.log('usuario', usuario);
+    const { usuario, clave } = req.body;
 
     if (usuario == null || clave == null)
-      return res.send("Usuario y clave invalidos.");
+      return res.send({
+        code: 1,
+        msg: "Usuario y clave invalidos."
+      });
 
     const ROWS = await pool.query(
       "SELECT * FROM estudiante WHERE usuario = ?",
@@ -34,7 +35,10 @@ class StudentController {
       let c = clave.toString();
       const isValid = helpers.matchPassword(c, DATA.clave);
 
-      if (!isValid) return res.send("La clave es incorrecta.");
+      if (!isValid) return res.send({
+        code: 2,
+        msg: "La clave es incorrecta.",
+      });
 
       const QUESTIONS = await pool.query(`SELECT * FROM pregunta`);
       //@ts-ignore
@@ -53,9 +57,12 @@ class StudentController {
         return Q;
       });
 
-      res.send({ data: DATA, questions: LIST });
+      res.send({ code: 0, msg: "Registro exitoso.", data: DATA, questions: LIST });
     } else {
-      return res.send("El usuario ingresado no se encuentra registrado.");
+      return res.send({
+        code: 1,
+        msg: "El usuario ingresado no se encuentra registrado."
+      });
     }
   }
 
@@ -82,6 +89,16 @@ class StudentController {
     });
 
     res.send({ data: DATA, preguntas: LIST });
+  }
+
+  async updateScore(req: Request, res: Response){
+    const { id, score } = req.query;
+    await pool.query('UPDATE  SET puntos = puntos + ? WHERE ID = ?;', [score, id]);
+    return res.send({
+      code: 0,
+      msg: "Actualizado de forma exitosa."
+    });
+    
   }
 }
 
