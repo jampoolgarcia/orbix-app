@@ -11,6 +11,9 @@ passport.use('local.login', new Strategy({
 }, async(req, usuario, clave, done) =>{
 
   const ROWS = await pool.query('SELECT * FROM profesor WHERE usuario = ?', [usuario]);
+  
+  console.log(ROWS[0]);
+  
   // @ts-ignore
   if(ROWS[0].length > 0){
     // @ts-ignore

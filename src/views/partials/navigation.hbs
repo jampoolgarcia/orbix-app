@@ -5,11 +5,25 @@
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="/question/list" class="nav-link active" aria-current="page">
+      <li class="mb-1">
+        <a href="#" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#question-collapse" aria-expanded="false">
           <img class="bi me-2" width="16" height="16" src="/icon/question.ico" alt="question" >
           Preguntas
         </a>
+        <div class="collapse" id="question-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li>
+              <a href="/question/list" class="link-dark rounded">
+                Lista
+              </a>
+            </li>
+            <li>
+              <a href="/question/register" class="link-dark rounded">
+                Registro
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <li>
         <a href="/student/score-list" class="nav-link link-dark">
@@ -17,11 +31,17 @@
           Estudiantes
         </a>
       </li>
-      <li>
-        <a href="/course/list" class="nav-link link-dark">
+      <li class="mb-1">
+        <a href="#" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#course-collapse" aria-expanded="false">
           <img class="bi me-2" width="16" height="16" src="/icon/book.ico" alt="course" >
           Materias
         </a>
+        <div class="collapse" id="course-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/course/list" class="link-dark rounded">Lista</a></li>
+            <li><a href="/course/register" class="link-dark rounded">Registro</a></li>
+          </ul>
+        </div>
       </li>
     </ul>
     <hr>
