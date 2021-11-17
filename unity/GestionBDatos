@@ -1,0 +1,250 @@
+using UnityEngine;
+using TMPro;
+using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System;
+
+
+public class GestionBD : MonoBehaviour {
+
+    // rutas del servidor
+    [SerializeField] private string loginEndpoint = "http://127.0.0.1:3000/login";
+    [SerializeField] private string registroEndpoint = "http://127.0.0.1:3000/student/register";
+    [SerializeField] private string scoreEndpoint = "http://127.0.0.1:3000/student/score";
+
+    // compos de texto
+    public InputField txtUsuario;
+    public InputField txtContraseña;
+    public InputField txtNombre;
+    public InputField txtApellido;
+
+    // botones 
+    [SerializeField] private Button loginButton;
+    [SerializeField] private Button createButton;
+
+    // label 
+    [SerializeField] private TextMeshProUGUI alertText;
+
+
+    public string nombre;
+    public string apellido;   
+    public int score;
+    public int id;
+    public bool sesionIniciada = false;
+
+
+    public static GestionBD singleton;
+
+    /// Respuestas WEB
+    ///    400  =  No pudo establecer coneccion
+    ///    401  =  No encontro datos
+    ///    402  =  El usuario ya existe
+    ///    200  =  Datos encontrados
+    ///    201  =  Usuario Registrado
+    ///    202  =  score actualizado
+
+    private void Awake(){
+        if (singleton == null)
+        {
+            singleton = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Start(){
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    public void iniciarSeccion(){
+        alertText.text = "Iniciando sesión...";
+        ActivateButtons(false);
+        StartCoroutine(login());
+    }
+
+    public void RegistarUsuario(){
+        alertText.text = "Creando cuenta...";
+        ActivateButtons(false);
+        StartCoroutine(Registrar());
+    }
+
+    public void score_Actualizar(int nScore){
+        StartCoroutine(Actualizarscore(nScore));
+    }
+
+    IEnumerator login(){
+        string usuario = txtUsuario.text;
+        string clave = txtContraseña.text;
+
+        if (usuario.Length < 3 || usuario.Length > 24)
+        {
+            alertText.text = "Nombre de usuario no válido";
+            ActivateButtons(true);
+            yield break;
+        }
+
+        UnityWebRequest request = UnityWebRequest.Get($"{{loginEndpoint}?usuario={usuario}&clave={clave}");
+        var handler = request.SendWebRequest();
+
+        float startTime = 0.0f;
+        while (!handler.isDone){
+            startTime += Time.deltaTime;
+            if (startTime > 10.0f){
+                break;
+            }
+            yield return null;
+        }
+
+        if(request.result == UnityWebRequest.Result.Success){
+            GameData response = JsonUtility.FromJson<GameData>(request.downloadHandler.text);
+            if (response.code == 0) {
+                // aqui va lo que pasa si fue exitoso.
+                ActivateButtons(false);
+                Debug(response.data)
+                alertText.text = "Welcome";
+            } else {
+                switch (response.code){
+                    case 1:
+                        alertText.text = "Credenciales no válidas";
+                        ActivateButtons(true);
+                        break;
+                    default:
+                        alertText.text = "Corrupción detectada";
+                        ActivateButtons(false);
+                        break;
+                }
+            }
+        }else{
+            alertText.text = "Error al conectarse al servidor.";
+            ActivateButtons(true);
+        }
+
+        yield return null;
+
+    }
+
+    IEnumerator datos(){
+        WWW coneccion = new WWW("http://localhost/juegarobix/datos.php?nom_usu=" + txtUsuario.text);
+        yield return (coneccion);
+        if (coneccion.text == "401")
+        {
+            print("Usuario incorrecto");
+        }
+        else
+        {
+            string[] nDatos = coneccion.text.Split('|');
+            if (nDatos.Length != 2)
+            {
+                print("Error en la coneccion");
+            }
+            else
+            {
+                nombreUsuario   = nDatos[0];
+                scoreUsuario     = int.Parse(nDatos[1]);
+                sesionIniciada   = true;
+                SceneManager.LoadScene("juego");
+            }
+        }
+    }
+
+    IEnumerator Registrar(){
+
+        string usuario = txtUsuario.text;
+        string clave = txtContraseña.text;
+        string nombre = txtNombre.text;
+        string apellido = txtApellido.text;
+
+        if (usuario.Length < 3 || usuario.Length > 24){
+            alertText.text = "Nombre de usuario no válido";
+            ActivateButtons(true);
+            yield break;
+        }
+
+        WWWForm form = new WWWForm();
+        form.AddField("usuario", usuario);
+        form.AddField("clave", clave);
+        form.AddField("nombre", nombre);
+        form.AddField("apellido", apellido);
+
+        UnityWebRequest request = UnityWebRequest.Post(registroEndpoint, form);
+        var handler = request.SendWebRequest();
+
+        float startTime = 0.0f;
+        while (!handler.isDone){
+            startTime += Time.deltaTime;
+
+            if (startTime > 10.0f)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        if (request.result == UnityWebRequest.Result.Success){
+            Debug.Log(request.downloadHandler.text);
+            GameData response = JsonUtility.FromJson<GameData>(request.downloadHandler.text);
+            if (response.code == 0) {
+                alertText.text = "¡Se ha creado la cuenta!";
+            }else{
+                switch (response.code){
+                    case 1:
+                        alertText.text = "Credenciales no válidas";
+                        break;
+                    case 2:
+                        alertText.text = "Este nombre de usuario ya existe";
+                        break;
+                    default:
+                        alertText.text = "Corruption detected";
+                        break;
+                }
+            }
+        }else{
+            alertText.text = "Error al conectarse al servidor.";
+        }
+
+        ActivateButtons(true);
+
+        yield return null;
+
+    }
+
+    IEnumerator Actualizarscore(int nScore){
+
+        UnityWebRequest request = UnityWebRequest.Get($"{{scoreEndpoint}?id={usuario.id}&score={nScore}");
+        var handler = request.SendWebRequest();
+
+        float startTime = 0.0f;
+        while (!handler.isDone){
+            startTime += Time.deltaTime;
+            if (startTime > 10.0f){
+                break;
+            }
+            yield return null;
+        }
+
+        if(request.result == UnityWebRequest.Result.Success){
+            // aqui va lo que pasa si fue exitoso.
+            Debug('actualizado')
+        }else{
+            alertText.text = "Error al conectarse al servidor.";
+        }
+        yield return null;
+    }
+
+    private void ActivateButtons(bool toggle){
+        loginButton.interactable = toggle;
+        registerButton.interactable = toggle;
+    }
+
+}
+
+public class GestionBD{
+    
+}
+
+
