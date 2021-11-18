@@ -3,11 +3,7 @@ import { DB } from './keys';
 
 let pool: any = null
 
-try {
-  const pool = mysql.createPool(DB)
-} catch(e) {
-  throw console.log('Error al conectar a la base de datos...');
-}
+pool = mysql.createPool(DB)
 
 export default pool;
 

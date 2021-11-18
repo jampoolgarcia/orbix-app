@@ -10,6 +10,9 @@ passport.use('local.login', new Strategy({
   passReqToCallback: true
 }, async(req, usuario, clave, done) =>{
 
+  console.log(usuario);
+  console.log(req.body);
+
   const ROWS = await pool.query('SELECT * FROM profesor WHERE usuario = ?', [usuario]);
   
   console.log(ROWS[0]);
